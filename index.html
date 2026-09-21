@@ -362,8 +362,8 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
   .service-card ul.check li { display: flex; gap: 9px; align-items: flex-start; font-size: 14.5px; color: var(--ink); }
   .service-card ul.check svg { width: 16px; height: 16px; margin-top: 3px; flex: none; color: var(--accent-green); }
   .service-card .note { font-size: 13px; color: var(--ink-faint); background: var(--bg-alt); border-radius: 10px; padding: 10px 12px; }
-  .service-card .cta { margin-top: auto; padding-top: 4px; }
-  .service-card .cta a { font-weight: 700; font-size: 14.5px; color: var(--accent-teal); display: inline-flex; align-items: center; gap: 6px; }
+  .service-card .cta { margin-top: auto; padding-top: 8px; }
+  .service-card .cta a.btn { padding: 10px 18px; font-size: 13.5px; }
   .service-card .cta a svg { width: 15px; height: 15px; transition: transform .15s ease; }
   .service-card .cta a:hover svg { transform: translateX(3px); }
   @media (max-width: 860px) { .services { grid-template-columns: 1fr; } }
@@ -388,12 +388,12 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
   }
 
   /* ---------- form ---------- */
-  .form-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+  .form-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); max-width: 640px; margin-inline: auto; }
   .form-panel .bar { height: 6px; background: var(--accent-grad); }
-  .form-panel iframe { width: 100%; height: 1150px; border: 0; display: block; background: var(--surface); }
+  .form-panel iframe { width: 100%; height: 980px; border: 0; display: block; background: var(--surface); }
   .form-fallback { padding: 16px 22px; font-size: 13.5px; color: var(--ink-faint); border-top: 1px solid var(--line); text-align: center; }
   .form-fallback a { color: var(--accent-teal); font-weight: 700; }
-  @media (max-width: 600px) { .form-panel iframe { height: 1320px; } .mini-steps { grid-template-columns: repeat(3, 1fr); gap: 8px; } .mini-step p { font-size: 12px; } }
+  @media (max-width: 600px) { .form-panel { max-width: none; } .form-panel iframe { height: 1320px; } .mini-steps { grid-template-columns: repeat(3, 1fr); gap: 8px; } .mini-step p { font-size: 12px; } }
 
   /* ---------- learn more ---------- */
   .section-head.center { align-items: center; text-align: center; max-width: 100%; margin-bottom: clamp(24px, 4vw, 36px); }
@@ -525,7 +525,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Chọn ngày giờ đẹp theo lá số Bát Tự</li>
           </ul>
           <p class="note">Lưu ý: việc lựa chọn thời điểm sinh luôn cần đặt yếu tố an toàn của mẹ và bé lên hàng đầu, và chỉ thực hiện trong phạm vi được bác sĩ chuyên môn cho phép.</p>
-          <div class="cta"><a href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cta"><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </article>
 
         <article class="service-card">
@@ -537,7 +537,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Xác định Dụng Thần Bát Tự</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Các tên phù hợp với Dụng Thần và ứng quẻ đẹp trong Việt Danh Học</li>
           </ul>
-          <div class="cta"><a href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cta"><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </article>
 
         <article class="service-card">
@@ -551,7 +551,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Người đang lựa chọn hoặc thay đổi công việc, sự nghiệp</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Người muốn hiểu rõ hơn về thế mạnh của bản thân</li>
           </ul>
-          <div class="cta"><a href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cta"><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </article>
 
         <article class="service-card">
@@ -564,7 +564,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Đặc điểm và thế mạnh bản thân</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Luận giải theo từng vấn đề: công danh, sự nghiệp, tài vận…</li>
           </ul>
-          <div class="cta"><a href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cta"><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </article>
       </div>
     </div>
@@ -599,9 +599,9 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
         <h2>Bát Tự là gì?</h2>
       </div>
       <div class="quote-card standalone">
-        <p>"Bát tự (Tứ trụ) là một bộ môn dự đoán có lịch sử hơn ngàn năm, bắt nguồn từ Trung Hoa cổ đại và được lưu truyền cho đến ngày nay. Dựa trên ngày, tháng, năm và giờ sinh, Bát tự thiết lập nên một hệ thống lý luận chặt chẽ để lý giải sự thịnh suy của đời người."</p>
-        <p>"Nhưng không chỉ dừng ở việc biết trước, Bát tự còn cho ta cách cải vận, tìm phương hướng, thời điểm hay môi trường phù hợp để giảm rủi ro, tăng thuận lợi."</p>
-        <p>"Nói đơn giản, Bát tự không phải bói toán may rủi, mà là một hệ thống minh triết cổ truyền đã được kiểm chứng qua nhiều thế hệ, giúp con người hiểu rõ mình hơn và sống hài hòa với dòng chảy tự nhiên của cuộc đời."</p>
+        <p>Bát tự (Tứ trụ) là một bộ môn dự đoán có lịch sử hơn ngàn năm, bắt nguồn từ Trung Hoa cổ đại và được lưu truyền cho đến ngày nay. Dựa trên ngày, tháng, năm và giờ sinh, Bát tự thiết lập nên một hệ thống lý luận chặt chẽ để lý giải sự thịnh suy của đời người.</p>
+        <p>Nhưng không chỉ dừng ở việc biết trước, Bát tự còn cho ta cách cải vận, tìm phương hướng, thời điểm hay môi trường phù hợp để giảm rủi ro, tăng thuận lợi.</p>
+        <p>Nói đơn giản, Bát tự không phải bói toán may rủi, mà là một hệ thống minh triết cổ truyền đã được kiểm chứng qua nhiều thế hệ, giúp con người hiểu rõ mình hơn và sống hài hòa với dòng chảy tự nhiên của cuộc đời.</p>
       </div>
     </div>
   </section>
