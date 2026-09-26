@@ -1,0 +1,10 @@
+{
+  "name": "phongthuydogia",
+  "private": true,
+  "type": "module",
+  "description": "Website Phong Thủy Đỗ Gia — trang tĩnh + Blog lấy bài từ Notion (Vercel Functions)",
+  "scripts": {
+    "build:pages": "node scripts/build-pages.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
