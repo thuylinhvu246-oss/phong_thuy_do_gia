@@ -27,7 +27,57 @@
 <meta name="twitter:title" content="Phong Thủy Đỗ Gia — Tư vấn Bát Tự cho gia đình">
 <meta name="twitter:description" content="Phong Thủy Đỗ Gia tư vấn Bát Tự: chọn ngày giờ sinh, đặt tên theo Bát Tự, định hướng công danh sự nghiệp và luận giải lá số — đồng hành cùng gia đình qua từng lựa chọn quan trọng.">
 <meta name="twitter:image" content="https://www.phongthuydogia.com/og-image.jpg">
+<link rel="preload" as="image" type="image/webp" href="/assets/hero-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="/assets/hero-desktop.webp" media="(min-width: 761px)" fetchpriority="high">
+<style>
+/* ---------- v5: hero có ảnh người đại diện ---------- */
+.hero.hero-photo { background: #1F7A6E; aspect-ratio: 1050 / 588; min-height: 360px; }
+.hero.hero-photo::after { display: none; }
+.hero-photo .hero-bg, .hero-photo .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-photo .hero-bg img { object-fit: cover; object-position: right center; }
+.hero-photo .hero-inner {
+  position: absolute; inset: 0; z-index: 1;
+  width: 50%; max-width: 520px;
+  padding: clamp(28px, 4vw, 48px) 0 clamp(28px, 4vw, 48px) clamp(26px, 6vw, 72px);
+  align-items: flex-start; justify-content: center; text-align: left; gap: 0;
+}
+.hero-photo .hero-logo { width: clamp(96px, 15vw, 172px); height: auto; margin: 0 0 10px; }
+.hero.hero-photo h1 {
+  font-size: clamp(11px, 1.25vw, 14px); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.92); line-height: 1.3; margin-bottom: clamp(16px, 2.6vw, 30px);
+}
+.hero.hero-photo p.tagline {
+  font-style: normal; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em;
+  font-size: clamp(22px, 3.3vw, 38px); line-height: 1.22; color: #FFFFFF; max-width: none;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.12);
+}
+.hero-photo .hero-ctas { justify-content: flex-start; margin-top: clamp(20px, 3vw, 34px); }
+@media (max-width: 760px) {
+  .hero.hero-photo { aspect-ratio: 750 / 1150; min-height: 0; }
+  .hero-photo .hero-bg img { object-position: center bottom; }
+  .hero-photo .hero-inner {
+    bottom: auto; width: 100%; max-width: none;
+    padding: clamp(24px, 7vw, 36px) 20px 0; align-items: center; text-align: center;
+  }
+  .hero-photo .hero-logo { width: clamp(78px, 24vw, 104px); margin-bottom: 8px; }
+  .hero.hero-photo h1 { font-size: 11.5px; margin-bottom: 12px; }
+  .hero.hero-photo p.tagline { font-size: clamp(21px, 6.6vw, 27px); }
+  .hero-photo .hero-ctas { justify-content: center; margin-top: 16px; gap: 10px; }
+  .hero-photo .hero-ctas .btn { padding: 10px 17px; font-size: 13.5px; }
+}
 
+/* ---------- v5: blog mới nhất trên trang chủ ---------- */
+.post-card h3 { font-size: 18px; font-weight: 700; letter-spacing: 0; line-height: 1.35; }
+.post-card h3 a:hover { color: var(--accent-teal); }
+.posts.latest[data-count="1"] { grid-template-columns: minmax(0, 420px); }
+.posts.latest[data-count="2"] { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 640px) { .posts.latest[data-count] { grid-template-columns: 1fr; } }
+.blog-home .section-head { max-width: none; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.blog-home .section-head > div { display: flex; flex-direction: column; gap: 12px; max-width: 680px; }
+.blog-home .see-all { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 700; color: var(--accent-teal); }
+.blog-home .see-all svg { width: 16px; height: 16px; transition: transform .15s ease; }
+.blog-home .see-all:hover svg { transform: translateX(3px); }
+</style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XY827X834K"></script>
 <script>
@@ -57,7 +107,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=4">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://www.phongthuydogia.com/#org","name":"Phong Thủy Đỗ Gia","url":"https://www.phongthuydogia.com/","logo":"https://www.phongthuydogia.com/assets/logo-square.png","image":"https://www.phongthuydogia.com/og-image.jpg","telephone":"+84345843443","slogan":"Giúp bạn làm chủ vận mệnh","address":{"@type":"PostalAddress","addressLocality":"Thái Nguyên","addressCountry":"VN"},"areaServed":"VN","sameAs":["https://www.facebook.com/phongthuydogia.official","https://www.tiktok.com/@phongthuydogia.com"],"description":"Tư vấn Bát Tự: chọn ngày giờ sinh, đặt tên, định hướng công danh sự nghiệp, luận giải lá số.","hasOfferCatalog":{"@type":"OfferCatalog","name":"Dịch vụ tư vấn Bát Tự","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Chọn ngày giờ sinh theo Bát Tự","url":"https://www.phongthuydogia.com/ngay-gio-sinh"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Đặt tên theo Bát Tự","url":"https://www.phongthuydogia.com/dat-ten"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Định hướng công danh sự nghiệp","url":"https://www.phongthuydogia.com/dinh-huong-su-nghiep"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Luận giải lá số Bát Tự","url":"https://www.phongthuydogia.com/luan-la-so"}}]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://www.phongthuydogia.com/#org","name":"Phong Thủy Đỗ Gia","url":"https://www.phongthuydogia.com/","logo":"https://www.phongthuydogia.com/assets/logo-square.png","image":"https://www.phongthuydogia.com/og-image.jpg","telephone":"+84345843443","slogan":"Giúp bạn làm chủ vận mệnh","address":{"@type":"PostalAddress","addressLocality":"Thái Nguyên","addressCountry":"VN"},"areaServed":"VN","sameAs":["https://www.facebook.com/phongthuydogia.official","https://www.tiktok.com/@phongthuydogia.com","https://www.youtube.com/@phongthuydogia"],"description":"Tư vấn Bát Tự: chọn ngày giờ sinh, đặt tên, định hướng công danh sự nghiệp, luận giải lá số.","hasOfferCatalog":{"@type":"OfferCatalog","name":"Dịch vụ tư vấn Bát Tự","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Chọn ngày giờ sinh theo Bát Tự","url":"https://www.phongthuydogia.com/ngay-gio-sinh"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Đặt tên theo Bát Tự","url":"https://www.phongthuydogia.com/dat-ten"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Định hướng công danh sự nghiệp","url":"https://www.phongthuydogia.com/dinh-huong-su-nghiep"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Luận giải lá số Bát Tự","url":"https://www.phongthuydogia.com/luan-la-so"}}]}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phong Thủy Đỗ Gia","url":"https://www.phongthuydogia.com/","inLanguage":"vi"}</script>
 </head>
 <body>
@@ -92,11 +142,17 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
 
 <main>
   <div class="wrap">
-    <section class="hero" aria-label="Giới thiệu chung">
+    <section class="hero hero-photo" aria-label="Giới thiệu chung">
+      <picture class="hero-bg">
+        <source media="(max-width: 760px)" type="image/webp" srcset="/assets/hero-mobile.webp">
+        <source media="(max-width: 760px)" srcset="/assets/hero-mobile.jpg">
+        <source type="image/webp" srcset="/assets/hero-desktop.webp">
+        <img src="/assets/hero-desktop.jpg" width="1050" height="588" alt="Người đại diện thương hiệu Phong Thủy Đỗ Gia" fetchpriority="high" decoding="async">
+      </picture>
       <div class="hero-inner">
         <img class="hero-logo" src="/assets/logo-mark-white.png" alt="Logo Phong Thủy Đỗ Gia" width="68" height="33">
         <h1>Phong Thủy Đỗ Gia</h1>
-        <p class="tagline">Giúp bạn làm chủ vận mệnh</p>
+        <p class="tagline">Giúp bạn<br>làm chủ vận&nbsp;mệnh</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#dang-ky">Đăng ký tư vấn</a>
           <a class="btn btn-ghost" href="#dich-vu">Xem dịch vụ</a>
@@ -253,28 +309,81 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
     </div>
   </section>
 
-  <section class="alt" id="bat-tu-la-gi">
+  <section class="alt blog-home" id="blog" aria-labelledby="blog-title">
     <div class="wrap">
-      <div class="section-head center">
-        <span class="eyebrow">Tìm hiểu thêm</span>
-        <h2>Bát Tự là gì?</h2>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Blog</span>
+          <h2 id="blog-title">Bài viết mới nhất</h2>
+          <p>Kiến thức Bát Tự ứng dụng và tin tức mới từ Phong Thủy Đỗ Gia.</p>
+        </div>
+        <a class="see-all" href="/blog">Xem tất cả bài viết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <div class="quote-card standalone">
-        <p>Bát tự (Tứ trụ) là một bộ môn dự đoán có lịch sử hơn ngàn năm, bắt nguồn từ Trung Hoa cổ đại và được lưu truyền cho đến ngày nay. Dựa trên ngày, tháng, năm và giờ sinh, Bát tự thiết lập nên một hệ thống lý luận chặt chẽ để lý giải sự thịnh suy của đời người.</p>
-        <p>Nhưng không chỉ dừng ở việc biết trước, Bát tự còn cho ta cách cải vận, tìm phương hướng, thời điểm hay môi trường phù hợp để giảm rủi ro, tăng thuận lợi.</p>
-        <p>Nói đơn giản, Bát tự không phải bói toán may rủi, mà là một hệ thống minh triết cổ truyền đã được kiểm chứng qua nhiều thế hệ, giúp con người hiểu rõ mình hơn và sống hài hòa với dòng chảy tự nhiên của cuộc đời.</p>
-        <p style="font-style:normal"><a href="/blog" style="color:var(--accent-teal);font-weight:700">Đọc thêm kiến thức Bát Tự trên Blog →</a></p>
+
+      <!-- Bản dự phòng tĩnh; script bên dưới sẽ thay bằng 3 bài mới nhất lấy từ /blog -->
+      <div class="posts latest" id="latestPosts" data-count="2">
+        <article class="post-card">
+          <a class="thumb" href="/blog/ngay-tot-sinh-con-thang-10-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white.png" alt="" width="64" height="31" loading="lazy"></a>
+          <div class="pc-body">
+            <div class="meta"><time datetime="2026-10-02">02/10/2026</time></div>
+            <h3><a href="/blog/ngay-tot-sinh-con-thang-10-2026">Ngày tốt sinh con tháng 10 năm 2026 theo Bát Tự</a></h3>
+            <p>Tổng hợp ngày được mùa sinh tháng 10/2026 theo Bát Tự. Tìm hiểu ngày nào có lợi thế về mùa khí và vì sao cần xem cả giờ sinh, Dụng Thần, ngũ hành và tổng thể lá số.</p>
+            <a class="more" href="/blog/ngay-tot-sinh-con-thang-10-2026">Đọc bài →</a>
+          </div>
+        </article>
+        <article class="post-card">
+          <a class="thumb" href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white.png" alt="" width="64" height="31" loading="lazy"></a>
+          <div class="pc-body">
+            <div class="meta"><time datetime="2026-09-28">28/09/2026</time></div>
+            <h3><a href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026">Chương trình giới thiệu bạn bè</a></h3>
+            <p>Đăng ký nhận hoa hồng</p>
+            <a class="more" href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026">Đọc bài →</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 </main>
+
+<script>
+  (function () {
+    // Blog mới nhất: lấy 3 thẻ bài đầu tiên từ trang /blog (đã render từ Notion, cache CDN).
+    // Lỗi mạng hoặc không tìm thấy bài thì giữ nguyên bản dự phòng tĩnh.
+    var box = document.getElementById('latestPosts');
+    if (box && window.fetch && window.DOMParser) {
+      fetch('/blog', { credentials: 'same-origin' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var cards = Array.prototype.slice.call(doc.querySelectorAll('.post-card'), 0, 3);
+          if (!cards.length) return;
+          var frag = document.createDocumentFragment();
+          cards.forEach(function (card) {
+            card.classList.remove('feature');
+            card.querySelectorAll('h2').forEach(function (h) {
+              var h3 = document.createElement('h3');
+              Array.prototype.forEach.call(h.attributes, function (a) { h3.setAttribute(a.name, a.value); });
+              h3.innerHTML = h.innerHTML;
+              h.parentNode.replaceChild(h3, h);
+            });
+            card.querySelectorAll('img').forEach(function (img) { img.setAttribute('loading', 'lazy'); });
+            frag.appendChild(document.importNode(card, true));
+          });
+          box.innerHTML = '';
+          box.appendChild(frag);
+          box.setAttribute('data-count', String(Math.min(cards.length, 3)));
+        })
+        .catch(function () {});
+    }
+  })();
+</script>
 
 <footer class="site" id="lien-he">
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="mark"><img src="/assets/logo-mark-white.png" alt="" width="24" height="12"><span>PHONG THỦY ĐỖ GIA</span></div>
-        <p>Giúp bạn làm chủ vận mệnh — tư vấn Bát Tự đồng hành cùng gia đình bạn qua từng lựa chọn quan trọng.</p>
+        <p>Giúp bạn làm chủ vận mệnh</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
@@ -283,6 +392,7 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
             <li><a href="tel:+84345843443"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2C10.5 19 5 13.5 5 6a2 2 0 0 1 1-3Z"/></svg>0345 84 3443 (Hotline / Zalo)</a></li>
             <li><a href="https://www.facebook.com/phongthuydogia.official" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>Facebook</a></li>
             <li><a href="https://www.tiktok.com/@phongthuydogia.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>TikTok</a></li>
+            <li><a href="https://www.youtube.com/@phongthuydogia" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>YouTube</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -298,9 +408,8 @@ src="https://www.facebook.com/tr?id=1085267117705693&ev=PageView&noscript=1"
           <h4>Điều hướng</h4>
           <ul>
             <li><a href="/#gioi-thieu">Giới thiệu</a></li>
-            <li><a href="/#dich-vu">Dịch vụ</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="/#dang-ky">Đăng ký</a></li>
+            <li><a href="/#dang-ky">Đăng ký tư vấn</a></li>
             <li><a href="https://forms.gle/PuMTBmgg7yaYKgme6" target="_blank" rel="noopener">Đăng ký nhận hoa hồng</a></li>
           </ul>
         </div>
