@@ -10,6 +10,7 @@ export const SITE = {
   zalo: 'https://zalo.me/0345843443',
   facebook: 'https://www.facebook.com/phongthuydogia.official',
   tiktok: 'https://www.tiktok.com/@phongthuydogia.com',
+  youtube: 'https://www.youtube.com/@phongthuydogia',
   formHome: 'https://forms.gle/YSe39Y2BQRUVjMpZ6',
   formService: 'https://forms.gle/WXvrBbeY6ZperzDJA',
   referral: 'https://forms.gle/PuMTBmgg7yaYKgme6',
@@ -180,7 +181,7 @@ export function footer() {
     <div class="footer-top">
       <div class="footer-brand">
         <div class="mark"><img src="/assets/logo-mark-white.png" alt="" width="24" height="12"><span>PHONG THỦY ĐỖ GIA</span></div>
-        <p>Giúp bạn làm chủ vận mệnh — tư vấn Bát Tự đồng hành cùng gia đình bạn qua từng lựa chọn quan trọng.</p>
+        <p>Giúp bạn làm chủ vận mệnh</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
@@ -189,6 +190,7 @@ export function footer() {
             <li><a href="tel:+84345843443">${ICONS.phone}${SITE.phoneDisplay} (Hotline / Zalo)</a></li>
             <li><a href="${SITE.facebook}" target="_blank" rel="noopener">${ICONS.ext}Facebook</a></li>
             <li><a href="${SITE.tiktok}" target="_blank" rel="noopener">${ICONS.ext}TikTok</a></li>
+            <li><a href="${SITE.youtube}" target="_blank" rel="noopener">${ICONS.ext}YouTube</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -201,9 +203,8 @@ export function footer() {
           <h4>Điều hướng</h4>
           <ul>
             <li><a href="/#gioi-thieu">Giới thiệu</a></li>
-            <li><a href="/#dich-vu">Dịch vụ</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="/#dang-ky">Đăng ký</a></li>
+            <li><a href="/#dang-ky">Đăng ký tư vấn</a></li>
             <li><a href="${SITE.referral}" target="_blank" rel="noopener">Đăng ký nhận hoa hồng</a></li>
           </ul>
         </div>
@@ -278,5 +279,5 @@ export const ORG_LD = {
   slogan: 'Giúp bạn làm chủ vận mệnh',
   address: { '@type': 'PostalAddress', addressLocality: 'Thái Nguyên', addressCountry: 'VN' },
   areaServed: 'VN',
-  sameAs: [SITE.facebook, SITE.tiktok],
+  sameAs: [SITE.facebook, SITE.tiktok, SITE.youtube],
 };
