@@ -77,3 +77,13 @@ dữ liệu cấu trúc BlogPosting + Breadcrumb, Mục lục, bài liên quan, 
 Có thể sửa trực tiếp các file `.html`. Nếu muốn sửa menu/footer cho tất cả trang cùng lúc:
 sửa `api/_lib/layout.js` (menu, footer, số điện thoại, link form) và `scripts/pages-data.mjs` (nội dung 4 trang dịch vụ),
 rồi chạy `node scripts/build-pages.mjs` để sinh lại các file `.html`.
+
+## 5. SEO kỹ thuật (cập nhật 13/10/2026)
+
+- **Microsoft Clarity** (bản đồ nhiệt, xem lại phiên truy cập) đã gắn trên mọi trang — mã nằm trong `api/_lib/layout.js` (`clarityId`).
+- **IndexNow**: mỗi sáng 6:00, Vercel tự báo Bing các bài blog đăng/sửa trong 48 giờ qua.
+  Gửi lại toàn bộ website bằng tay: mở `https://www.phongthuydogia.com/api/indexnow?all=1`.
+  Không xóa file `6f1d2c9a8b4e47f3a5c0d8e2b7f91a34.txt` ở thư mục gốc (đó là khóa xác minh).
+- **llms.txt**: bản tóm tắt cho AI (ChatGPT, Gemini…). Thêm link bài viết quan trọng vào mục "Kiến thức" khi có bài trụ cột mới.
+- **Sitemap**: khi sửa trang chủ hoặc trang dịch vụ, đổi ngày `STATIC_UPDATED` trong `api/sitemap.js`.
+- **Tác giả bài viết**: thêm cột `Tác giả` (Text) vào database Blog trên Notion, điền tên người viết — web sẽ hiển thị và khai báo cho Google.

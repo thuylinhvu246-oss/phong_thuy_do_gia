@@ -1,5 +1,5 @@
 // Chuyển block Notion → HTML chuẩn SEO, và dựng các trang Blog.
-import { SITE, ICONS, esc, head, header, footer, crumbs, breadcrumbLd, referralBlock } from './layout.js';
+import { SITE, ICONS, esc, clip, head, header, footer, crumbs, breadcrumbLd, referralBlock } from './layout.js';
 import { slugify, plain } from './notion.js';
 
 // ---------- rich text ----------
@@ -218,7 +218,7 @@ export function postPage(post, blocks, related = []) {
   const path = `/blog/${post.slug}`;
   const bc = [{ name: 'Trang chủ', href: '/' }, { name: 'Blog', href: '/blog' }, { name: post.title, href: path }];
   const firstP = body.match(/<p>(.*?)<\/p>/);
-  const description = (post.description || (firstP ? firstP[1].replace(/<[^>]+>/g, '') : '') || post.title).slice(0, 160);
+  const description = clip(post.description || (firstP ? firstP[1].replace(/<[^>]+>/g, '') : '') || post.title, 160);
   const img = absUrl(post.cover) || SITE.ogImage;
 
   const ld = [

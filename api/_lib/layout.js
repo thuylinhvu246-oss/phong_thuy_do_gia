@@ -17,7 +17,22 @@ export const SITE = {
   ogImage: 'https://www.phongthuydogia.com/og-image.jpg',
   gaId: 'G-XY827X834K',
   pixelId: '1085267117705693',
+  clarityId: 'ywuz5d3ghp',
+  // Khóa IndexNow (báo Bing/Yandex khi có bài mới). File /<khóa>.txt phải nằm ở thư mục gốc.
+  indexNowKey: '6f1d2c9a8b4e47f3a5c0d8e2b7f91a34',
 };
+
+// Một câu mô tả thương hiệu, dùng giống hệt ở website, llms.txt, Google Business Profile, mạng xã hội.
+export const BRAND_DESC = 'Phong Thủy Đỗ Gia là đơn vị tư vấn Bát Tự cho gia đình tại Thái Nguyên, chuyên chọn ngày giờ sinh, đặt tên con theo Bát Tự, định hướng công danh sự nghiệp và luận giải lá số, tư vấn online toàn quốc.';
+
+// Rút gọn mô tả ≤ max ký tự, cắt ở ranh giới từ (không cắt giữa chữ).
+export function clip(text = '', max = 160) {
+  const t = String(text).replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  const sp = cut.lastIndexOf(' ');
+  return (sp > max * 0.6 ? cut.slice(0, sp) : cut).replace(/[\s,.;:–—-]+$/, '') + '…';
+}
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -113,6 +128,14 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=${SITE.pixelId}&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<!-- Microsoft Clarity -->
+<script>
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "${SITE.clarityId}");
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
@@ -277,7 +300,23 @@ export const ORG_LD = {
   image: SITE.ogImage,
   telephone: '+84345843443',
   slogan: 'Giúp bạn làm chủ vận mệnh',
-  address: { '@type': 'PostalAddress', addressLocality: 'Thái Nguyên', addressCountry: 'VN' },
-  areaServed: 'VN',
+  description: BRAND_DESC,
+  inLanguage: 'vi',
+  address: { '@type': 'PostalAddress', addressLocality: 'Thái Nguyên', addressRegion: 'Thái Nguyên', addressCountry: 'VN' },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Thái Nguyên' },
+    { '@type': 'AdministrativeArea', name: 'Hà Nội' },
+    { '@type': 'Country', name: 'Việt Nam' },
+  ],
+  knowsAbout: ['Bát Tự', 'Tứ Trụ', 'Dụng Thần', 'Chọn ngày giờ sinh', 'Đặt tên theo Bát Tự', 'Việt Danh Học', 'Định hướng nghề nghiệp theo Bát Tự'],
+  contactPoint: { '@type': 'ContactPoint', telephone: '+84345843443', contactType: 'customer service', availableLanguage: 'vi', areaServed: 'VN' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Dịch vụ tư vấn Bát Tự',
+    itemListElement: SERVICES.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.long, description: s.short, url: SITE.url + '/' + s.slug },
+    })),
+  },
   sameAs: [SITE.facebook, SITE.tiktok, SITE.youtube],
 };

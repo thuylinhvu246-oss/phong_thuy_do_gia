@@ -2,13 +2,16 @@ import { listPosts } from './_lib/notion.js';
 import { SITE, SERVICES } from './_lib/layout.js';
 import { send } from './_lib/http.js';
 
+// Ngày sửa gần nhất của trang chủ + 4 trang dịch vụ. Cập nhật mỗi khi sửa các file .html này.
+const STATIC_UPDATED = '2026-10-13';
+
 export default async function handler(req, res) {
   let posts = [];
   try { posts = await listPosts(); } catch (e) { console.error(e); }
   const urls = [
-    { loc: '/', pri: '1.0' },
-    ...SERVICES.map((s) => ({ loc: '/' + s.slug, pri: '0.9' })),
-    { loc: '/blog', pri: '0.8', mod: posts[0] && posts[0].updated },
+    { loc: '/', pri: '1.0', mod: STATIC_UPDATED },
+    ...SERVICES.map((s) => ({ loc: '/' + s.slug, pri: '0.9', mod: STATIC_UPDATED })),
+    { loc: '/blog', pri: '0.8', mod: (posts[0] && (posts[0].updated || posts[0].date)) || STATIC_UPDATED },
     ...posts.map((p) => ({ loc: '/blog/' + p.slug, pri: '0.7', mod: p.updated || p.date })),
   ];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
