@@ -63,6 +63,19 @@ function fileUrl(f) {
   return null;
 }
 
+// Thời điểm bài được phép hiện trên web (theo giờ Việt Nam).
+// - Chỉ chọn ngày  → hiện từ 0h00 ngày đó (giờ VN)
+// - Chọn cả giờ    → hiện đúng giờ đó
+// - Không có ngày  → hiện ngay khi tick Xuất bản
+export function goLiveAt(date) {
+  if (!date) return 0;
+  let s = String(date);
+  if (!s.includes('T')) s += 'T00:00:00+07:00';
+  else if (!/(Z|[+-]\d{2}:?\d{2})$/.test(s)) s += '+07:00';
+  const t = Date.parse(s);
+  return Number.isNaN(t) ? 0 : t;
+}
+
 function isPublished(page) {
   const p = prop(page, ['Xuất bản', 'Xuat ban', 'Published', 'Đăng', 'Công khai'], ['checkbox', 'status', 'select']);
   if (!p) return true; // không có cột trạng thái → coi như đã đăng
@@ -107,6 +120,7 @@ export function toPost(page) {
     slug,
     description: descP ? plain(descP.rich_text) : '',
     date: (dateP && dateP.date && dateP.date.start) || page.created_time,
+    scheduled: (dateP && dateP.date && dateP.date.start) || null,
     updated: page.last_edited_time,
     tags,
     author,
@@ -142,7 +156,8 @@ export async function listPosts() {
     return pages
       .filter((p) => !p.archived && !p.in_trash)
       .map(toPost)
-      .filter((p) => p.published)
+      // chỉ hiện bài đã tick Xuất bản VÀ đã đến Ngày đăng (bài hẹn lịch tự lên đúng ngày)
+      .filter((p) => p.published && goLiveAt(p.scheduled) <= Date.now())
       .sort((a, b) => (a.date < b.date ? 1 : -1));
   });
 }

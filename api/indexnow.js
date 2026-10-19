@@ -3,7 +3,7 @@
 //
 // - Vercel Cron gọi tự động mỗi ngày (xem vercel.json): gửi các bài blog đăng/sửa trong 48 giờ qua.
 // - Gửi lại toàn bộ website bằng tay: mở https://www.phongthuydogia.com/api/indexnow?all=1
-import { listPosts } from './_lib/notion.js';
+import { listPosts, goLiveAt } from './_lib/notion.js';
 import { SITE, SERVICES } from './_lib/layout.js';
 
 const HOST = new URL(SITE.url).host;
@@ -14,7 +14,8 @@ export default async function handler(req, res) {
   try { posts = await listPosts(); } catch (e) { console.error(e); }
 
   const since = Date.now() - 48 * 3600 * 1000;
-  const fresh = posts.filter((p) => Date.parse(p.updated || p.date) >= since);
+  // bài vừa sửa, hoặc bài hẹn lịch vừa đến ngày đăng
+  const fresh = posts.filter((p) => Math.max(Date.parse(p.updated || 0) || 0, goLiveAt(p.date)) >= since);
   const paths = all
     ? ['/', ...SERVICES.map((s) => '/' + s.slug), '/blog', ...posts.map((p) => '/blog/' + p.slug)]
     : fresh.length ? ['/blog', ...fresh.map((p) => '/blog/' + p.slug)] : [];
