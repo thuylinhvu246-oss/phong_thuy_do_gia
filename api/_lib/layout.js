@@ -67,6 +67,10 @@ export const SERVICES = [
     short: 'Bức tranh tổng thể về bản mệnh và các khía cạnh cuộc sống qua lá số Bát Tự.' },
 ];
 
+// CSS dùng chung được nhúng thẳng vào <head> (không phải tải thêm file, trang hiện nhanh hơn).
+// File này do `node scripts/build-pages.mjs` sinh từ assets/fonts.css + assets/site.css — sửa CSS ở đó rồi chạy lại.
+import { SITE_CSS } from './site-css.js';
+
 // ---------- <head> ----------
 export function head({ title, description, path = '/', ogType = 'website', ogImage = SITE.ogImage, jsonLd = [], noindex = false, extraHead = '' }) {
   const url = SITE.url + (path === '/' ? '/' : path);
@@ -103,43 +107,40 @@ ${ogImage === SITE.ogImage ? '<meta property="og:image:width" content="1200">\n<
 <meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${esc(ogImage)}">
 ${extraHead}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}"></script>
+<link rel="preload" href="/assets/fonts/open-sans-vietnamese-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/open-sans-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>${SITE_CSS}</style>
+<!-- Google Analytics, Meta Pixel, Microsoft Clarity: ghi nhận ngay nhưng chỉ tải script
+     khi khách tương tác (cuộn, chạm, bấm) hoặc 3,5 giây sau khi trang tải xong,
+     để không làm chậm lần hiển thị đầu tiên. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', '${SITE.gaId}');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '${SITE.pixelId}');
-fbq('track', 'PageView');
+  !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window);
+  fbq('init', '${SITE.pixelId}');
+  fbq('track', 'PageView');
+  window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
+  (function (w, d) {
+    var done = false, evs = ['scroll', 'pointerdown', 'touchstart', 'keydown', 'mousemove'];
+    function add(src) { var s = d.createElement('script'); s.async = true; s.src = src; d.head.appendChild(s); }
+    function load() {
+      if (done) return; done = true;
+      evs.forEach(function (e) { w.removeEventListener(e, load, true); });
+      add('https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}');
+      add('https://connect.facebook.net/en_US/fbevents.js');
+      add('https://www.clarity.ms/tag/${SITE.clarityId}?ref=bwt');
+    }
+    evs.forEach(function (e) { w.addEventListener(e, load, { capture: true, passive: true }); });
+    if (d.readyState === 'complete') setTimeout(load, 3500);
+    else w.addEventListener('load', function () { setTimeout(load, 3500); });
+  })(window, document);
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=${SITE.pixelId}&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code -->
-<!-- Microsoft Clarity -->
-<script>
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "${SITE.clarityId}");
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=4">
 ${ld}
 </head>`;
 }
@@ -154,7 +155,7 @@ export function header({ active = 'home', ctaHref = '/#dang-ky' } = {}) {
   return `<header class="site">
   <div class="wrap nav-row">
     <a class="brand" href="/" aria-label="Phong Thủy Đỗ Gia — Trang chủ">
-      <span class="badge"><img src="/assets/logo-mark-white.png" alt="" width="19" height="9"></span>
+      <span class="badge"><img src="/assets/logo-mark-white-sm.webp" alt="" width="19" height="9"></span>
       <span class="brand-text">PHONG THỦY ĐỖ GIA</span>
     </a>
     <input type="checkbox" id="navToggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
@@ -172,7 +173,7 @@ export function header({ active = 'home', ctaHref = '/#dang-ky' } = {}) {
         <a href="#lien-he">Liên hệ</a>
       </nav>
       <a class="btn btn-primary cta-header" href="${ctaHref}"><span class="full">Đăng ký tư vấn</span><span class="short">Đăng ký</span></a>
-      <label for="navToggle" class="hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></label>
+      <label for="navToggle" class="hamburger"><span class="sr-only">Mở menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></label>
     </div>
   </div>
 </header>`;
@@ -203,7 +204,7 @@ export function footer() {
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="mark"><img src="/assets/logo-mark-white.png" alt="" width="24" height="12"><span>PHONG THỦY ĐỖ GIA</span></div>
+        <div class="mark"><img src="/assets/logo-mark-white-sm.webp" alt="" width="24" height="12" loading="lazy"><span>PHONG THỦY ĐỖ GIA</span></div>
         <p>Giúp bạn làm chủ vận mệnh</p>
       </div>
       <div class="footer-cols">

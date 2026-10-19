@@ -151,7 +151,7 @@ const absUrl = (u) => (u && u.startsWith('/') ? SITE.url + u : u);
 function postCard(p, feature = false) {
   return `<article class="post-card${feature ? ' feature' : ''}">
     <a class="thumb" href="/blog/${p.slug}" tabindex="-1" aria-hidden="true">${
-      p.cover ? `<img src="${esc(p.cover)}" alt="" loading="lazy" decoding="async">` : `<img class="ph" src="/assets/logo-mark-white.png" alt="">`
+      p.cover ? `<img src="${esc(p.cover)}" alt="" loading="lazy" decoding="async">` : `<img class="ph" src="/assets/logo-mark-white-sm.webp" alt="" loading="lazy">`
     }</a>
     <div class="pc-body">
       <div class="meta">${p.tags[0] ? `<span class="t">${esc(p.tags[0])}</span>` : ''}<time datetime="${p.date.slice(0, 10)}">${fmtDate(p.date)}</time></div>
@@ -255,7 +255,7 @@ ${header({ active: 'blog', ctaHref: '/#dang-ky' })}
           <h1>${esc(post.title)}</h1>
           ${post.description ? `<p class="lead">${esc(post.description)}</p>` : ''}
           <div class="byline">
-            <span class="av"><img src="/assets/logo-mark-white.png" alt=""></span>
+            <span class="av"><img src="/assets/logo-mark-white-sm.webp" alt="" width="24" height="12"></span>
             <div><b>${esc(post.author)}</b><time datetime="${post.date.slice(0, 10)}">${fmtDate(post.date)}</time> · ${mins} phút đọc</div>
           </div>
         </header>

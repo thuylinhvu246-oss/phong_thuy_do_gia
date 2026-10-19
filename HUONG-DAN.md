@@ -87,3 +87,12 @@ rồi chạy `node scripts/build-pages.mjs` để sinh lại các file `.html`.
 - **llms.txt**: bản tóm tắt cho AI (ChatGPT, Gemini…). Thêm link bài viết quan trọng vào mục "Kiến thức" khi có bài trụ cột mới.
 - **Sitemap**: khi sửa trang chủ hoặc trang dịch vụ, đổi ngày `STATIC_UPDATED` trong `api/sitemap.js`.
 - **Tác giả bài viết**: thêm cột `Tác giả` (Text) vào database Blog trên Notion, điền tên người viết — web sẽ hiển thị và khai báo cho Google.
+
+## 6. Tốc độ tải trang (cập nhật 15/10/2026)
+
+- Font Open Sans được lưu ngay trên website (`assets/fonts/`), không tải từ Google Fonts nữa.
+- CSS được nhúng thẳng vào từng trang. **Khi sửa `assets/site.css`, phải chạy `node scripts/build-pages.mjs`**
+  để sinh lại `api/_lib/site-css.js` và các file `.html` — nếu chỉ sửa site.css thì web sẽ không đổi.
+- Google Analytics, Meta Pixel và Clarity chỉ tải khi khách cuộn/chạm/bấm, hoặc sau 3,5 giây.
+  Lượt xem trang vẫn được ghi nhận; chỉ những khách thoát trong vòng ~3 giây mà không chạm vào trang có thể không được đếm.
+- Logo dùng định dạng WebP (`logo-mark-white.webp`, bản nhỏ `logo-mark-white-sm.webp`).

@@ -1,14 +1,21 @@
 // Sinh các trang tĩnh: index.html + 4 trang dịch vụ.
 // Chạy: node scripts/build-pages.mjs   (không bắt buộc khi deploy — các file .html đã được sinh sẵn)
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import {
-  SITE, SERVICES, ICONS, esc, head, header, footer, referralBlock, crumbs, breadcrumbLd, ORG_LD,
-} from '../api/_lib/layout.js';
 import { PAGES } from './pages-data.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+// CSS nhúng vào <head> mọi trang (kể cả Blog): font + site.css, bỏ chú thích và khoảng trắng thừa.
+const minCss = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim();
+const css = minCss(readFileSync(join(ROOT, 'assets/fonts.css'), 'utf8') + readFileSync(join(ROOT, 'assets/site.css'), 'utf8'));
+writeFileSync(join(ROOT, 'api/_lib/site-css.js'), `// TỰ SINH bởi scripts/build-pages.mjs từ assets/fonts.css + assets/site.css — không sửa tay.\nexport const SITE_CSS = ${JSON.stringify(css)};\n`);
+
+// layout.js đọc site-css.js, nên nạp sau khi đã sinh file trên.
+const {
+  SITE, SERVICES, ICONS, esc, head, header, footer, referralBlock, crumbs, breadcrumbLd, ORG_LD,
+} = await import('../api/_lib/layout.js');
 const stripTags = (s) => s.replace(/<[^>]+>/g, '');
 // giữ các cụm từ không bị ngắt dòng giữa chừng trong tiêu đề
 const NB = ['Bát Tự', 'gia đình', 'công danh', 'sự nghiệp', 'lá số', 'ngày giờ', 'Đỗ Gia', 'vận mệnh', 'phù hợp'];
@@ -66,7 +73,7 @@ const HOME_HEAD = `<link rel="preload" as="image" type="image/webp" href="/asset
 @media (max-width: 640px) { .posts.latest[data-count] { grid-template-columns: 1fr; } }
 .blog-home .section-head { max-width: none; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .blog-home .section-head > div { display: flex; flex-direction: column; gap: 12px; max-width: 680px; }
-.blog-home .see-all { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 700; color: var(--accent-teal); }
+.blog-home .see-all { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 700; color: var(--teal-text); }
 .blog-home .see-all svg { width: 16px; height: 16px; transition: transform .15s ease; }
 .blog-home .see-all:hover svg { transform: translateX(3px); }
 </style>`;
@@ -75,8 +82,10 @@ const HOME_SCRIPT = `<script>
   (function () {
     // Blog mới nhất: lấy 3 thẻ bài đầu tiên từ trang /blog (đã render từ Notion, cache CDN).
     // Lỗi mạng hoặc không tìm thấy bài thì giữ nguyên bản dự phòng tĩnh.
+    // Chỉ tải khi khách cuộn gần tới mục Blog, để không tranh băng thông với phần đầu trang.
     var box = document.getElementById('latestPosts');
-    if (box && window.fetch && window.DOMParser) {
+    if (!box || !window.fetch || !window.DOMParser) return;
+    function run() {
       fetch('/blog', { credentials: 'same-origin' })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
         .then(function (html) {
@@ -101,6 +110,12 @@ const HOME_SCRIPT = `<script>
         })
         .catch(function () {});
     }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); run(); }
+      }, { rootMargin: '800px 0px' });
+      io.observe(box);
+    } else { window.addEventListener('load', run); }
   })();
 </script>`;
 
@@ -127,7 +142,7 @@ function homePage() {
           <ul class="check">
             ${c.items.map((t) => `<li>${ICONS.check}${t}</li>`).join('\n            ')}
           </ul>${c.note ? `\n          <p class="note">${c.note}</p>` : ''}
-          <div class="cta"><a class="btn btn-ghost" href="/${c.s.slug}">Xem chi tiết</a><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay ${ICONS.arrow}</a></div>
+          <div class="cta"><a class="btn btn-ghost" href="/${c.s.slug}">Xem chi tiết<span class="sr-only"> dịch vụ ${c.s.name}</span></a><a class="btn btn-primary" href="#dang-ky">Đăng ký ngay ${ICONS.arrow}</a></div>
         </article>`).join('\n');
 
   const journey = SERVICES.map((s, i) =>
@@ -156,10 +171,10 @@ ${header({ active: 'home', ctaHref: '#dang-ky' })}
         <source media="(max-width: 760px)" type="image/webp" srcset="/assets/hero-mobile.webp">
         <source media="(max-width: 760px)" srcset="/assets/hero-mobile.jpg">
         <source type="image/webp" srcset="/assets/hero-desktop.webp">
-        <img src="/assets/hero-desktop.jpg" width="1050" height="588" alt="Người đại diện thương hiệu Phong Thủy Đỗ Gia" fetchpriority="high" decoding="async">
+        <img src="/assets/hero-desktop.jpg" width="1050" height="588" alt="Người đại diện thương hiệu Phong Thủy Đỗ Gia" fetchpriority="high">
       </picture>
       <div class="hero-inner">
-        <img class="hero-logo" src="/assets/logo-mark-white.png" alt="Logo Phong Thủy Đỗ Gia" width="68" height="33">
+        <img class="hero-logo" src="/assets/logo-mark-white.webp" alt="Logo Phong Thủy Đỗ Gia" width="300" height="145">
         <h1>Phong Thủy Đỗ Gia</h1>
         <p class="tagline">Giúp bạn<br>làm chủ vận&nbsp;mệnh</p>
         <div class="hero-ctas">
@@ -264,7 +279,7 @@ ${header({ active: 'home', ctaHref: '#dang-ky' })}
       <!-- Bản dự phòng tĩnh; script bên dưới sẽ thay bằng 3 bài mới nhất lấy từ /blog -->
       <div class="posts latest" id="latestPosts" data-count="2">
         <article class="post-card">
-          <a class="thumb" href="/blog/ngay-tot-sinh-con-thang-10-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white.png" alt="" width="64" height="31" loading="lazy"></a>
+          <a class="thumb" href="/blog/ngay-tot-sinh-con-thang-10-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white-sm.webp" alt="" width="64" height="31" loading="lazy"></a>
           <div class="pc-body">
             <div class="meta"><time datetime="2026-10-02">02/10/2026</time></div>
             <h3><a href="/blog/ngay-tot-sinh-con-thang-10-2026">Ngày tốt sinh con tháng 10 năm 2026 theo Bát Tự</a></h3>
@@ -273,7 +288,7 @@ ${header({ active: 'home', ctaHref: '#dang-ky' })}
           </div>
         </article>
         <article class="post-card">
-          <a class="thumb" href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white.png" alt="" width="64" height="31" loading="lazy"></a>
+          <a class="thumb" href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026" tabindex="-1" aria-hidden="true"><img class="ph" src="/assets/logo-mark-white-sm.webp" alt="" width="64" height="31" loading="lazy"></a>
           <div class="pc-body">
             <div class="meta"><time datetime="2026-09-28">28/09/2026</time></div>
             <h3><a href="/blog/chuong-trinh-gioi-thieu-ban-be-phong-thuy-do-gia-2026">Chương trình giới thiệu bạn bè</a></h3>
